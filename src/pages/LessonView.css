@@ -1,0 +1,1719 @@
+/* ══════════════════════════════════════════════════════════════════════
+   LessonView.css — Content Studio Textbook Design System
+   Prefix: lv2-
+   Inspired by: Pearson / Oxford ELT / Cambridge educational publishing
+══════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* ── Design tokens ── */
+:root {
+  --lv-navy:      #1a2e4a;
+  --lv-blue:      #2563eb;
+  --lv-blue-lt:   #eff6ff;
+  --lv-purple:    #7c3aed;
+  --lv-purple-lt: #f5f3ff;
+  --lv-teal:      #0d9488;
+  --lv-teal-lt:   #f0fdfa;
+  --lv-gold:      #d97706;
+  --lv-gold-lt:   #fffbeb;
+  --lv-green:     #059669;
+  --lv-green-lt:  #f0fdf4;
+  --lv-orange:    #ea580c;
+  --lv-orange-lt: #fff7ed;
+  --lv-bg:        #FFF0F5;
+  --lv-surface:   #ffffff;
+  --lv-border:    #e2e8f0;
+  --lv-text:      #0f172a;
+  --lv-muted:     #64748b;
+  --lv-shadow:    0 1px 4px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+  --lv-sidebar-w: 290px;
+  --lv-overview-w: 310px;
+  --lv-topbar-h:  58px;
+  --lv-font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --lv-font-sans:  'DM Sans', 'Segoe UI', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+.lv2-root {
+  background: var(--lv-bg);
+  min-height: 100vh;
+  font-family: var(--lv-font-sans);
+  color: var(--lv-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   LOADING
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-loading {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--lv-muted);
+  font-size: 15px;
+}
+
+.lv2-loading-spinner {
+  width: 36px; height: 36px;
+  border: 3px solid #e2e8f0;
+  border-top-color: var(--lv-blue);
+  border-radius: 50%;
+  animation: lv2-spin 0.8s linear infinite;
+}
+
+@keyframes lv2-spin { to { transform: rotate(360deg); } }
+
+/* ══════════════════════════════════════════════════════════════════════
+   NAVBAR
+══════════════════════════════════════════════════════════════════════ */
+
+/* ── Navbar — light blue, same style as main Header ── */
+.lv2-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  height: var(--lv-topbar-h);
+  background: #EFF6FF;
+  border-bottom: 1px solid #BFDBFE;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px;
+  box-shadow: 0 1px 8px rgba(37,99,235,0.08);
+}
+
+/* Logo — matches Header.jsx exactly */
+.lv2-nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+.lv2-nav-logo-img {
+  height: 46px;
+  object-fit: contain;
+  display: block;
+}
+.lv2-nav-logo-text {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  font-family: 'Space Grotesk', 'DM Sans', system-ui, sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.lv2-nav-logo-dark { color: #111827; }
+.lv2-nav-logo-blue { color: #2563EB; }
+
+.lv2-nav-crumb {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.lv2-crumb-btn {
+  background: none; border: none;
+  color: #64748B;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  padding: 2px 4px;
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.lv2-crumb-btn:hover { color: #2563EB; }
+
+.lv2-crumb-sep { color: #CBD5E1; font-size: 12px; }
+
+.lv2-crumb-cur {
+  color: #0F172A;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+/* Nav pills — hidden now (info lives in the hero card) */
+.lv2-nav-pills { display: none; }
+.lv2-npill { display: none; }
+
+.lv2-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.lv2-nav-btn {
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+/* Ghost button — light on white background */
+.lv2-nav-btn-ghost {
+  background: #F8FAFC;
+  color: #475569;
+  border: 1.5px solid #E2E8F0;
+}
+.lv2-nav-btn-ghost:hover {
+  background: #F1F5F9;
+  color: #1E293B;
+  border-color: #CBD5E1;
+}
+
+/* Primary — orange, matches main header Login button */
+.lv2-nav-btn-primary {
+  background: #F97316;
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 8px rgba(249,115,22,0.28);
+}
+.lv2-nav-btn-primary:hover {
+  background: #EA580C;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(249,115,22,0.38);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   3-COLUMN LAYOUT
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-layout {
+  display: grid;
+  grid-template-columns: var(--lv-sidebar-w) 1fr var(--lv-overview-w);
+  gap: 20px;
+  max-width: 100%;
+  margin: 0;
+  padding: 20px 24px 60px;
+  align-items: start;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   LEFT SIDEBAR
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-sidebar {
+  background: var(--lv-surface);
+  border-radius: 14px;
+  box-shadow: var(--lv-shadow);
+  padding: 18px 12px;
+  position: sticky;
+  top: calc(var(--lv-topbar-h) + 16px);
+  max-height: calc(100vh - var(--lv-topbar-h) - 40px);
+  overflow-y: auto;
+}
+
+.lv2-sidebar-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--lv-muted);
+  padding: 0 8px;
+  margin-bottom: 10px;
+}
+
+.lv2-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lv2-navitem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: #4b5563;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.12s, color 0.12s;
+  width: 100%;
+}
+
+.lv2-navitem:hover { background: #f3f4f6; color: var(--lv-text); }
+
+.lv2-navitem.active { background: #eff6ff; color: var(--lv-blue); font-weight: 600; }
+
+/* Color-coded active states */
+.lv2-navitem-blue.active    { background: var(--lv-blue-lt);   color: var(--lv-blue);   }
+.lv2-navitem-purple.active  { background: var(--lv-purple-lt); color: var(--lv-purple); }
+.lv2-navitem-teal.active    { background: var(--lv-teal-lt);   color: var(--lv-teal);   }
+.lv2-navitem-gold.active    { background: var(--lv-gold-lt);   color: var(--lv-gold);   }
+.lv2-navitem-green.active   { background: var(--lv-green-lt);  color: var(--lv-green);  }
+.lv2-navitem-orange.active  { background: var(--lv-orange-lt); color: var(--lv-orange); }
+
+.lv2-navitem-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.lv2-navitem-blue.active   .lv2-navitem-num { background: var(--lv-blue);   color: #fff; }
+.lv2-navitem-purple.active .lv2-navitem-num { background: var(--lv-purple); color: #fff; }
+.lv2-navitem-teal.active   .lv2-navitem-num { background: var(--lv-teal);   color: #fff; }
+.lv2-navitem-gold.active   .lv2-navitem-num { background: var(--lv-gold);   color: #fff; }
+.lv2-navitem-green.active  .lv2-navitem-num { background: var(--lv-green);  color: #fff; }
+.lv2-navitem-orange.active .lv2-navitem-num { background: var(--lv-orange); color: #fff; }
+
+.lv2-navitem-label { flex: 1; line-height: 1.3; }
+
+.lv2-sidebar-divider {
+  height: 1px;
+  background: var(--lv-border);
+  margin: 12px 0;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   MAIN CONTENT
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* ── Hero card ── */
+.lv2-hero {
+  background: var(--lv-surface);
+  border-radius: 16px;
+  box-shadow: var(--lv-shadow);
+  overflow: hidden;
+}
+
+.lv2-hero-img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
+}
+
+/* ── Hero banner (no cover image) ── */
+.lv2-hero-banner {
+  width: 100%;
+  height: 380px;
+  background: #1a2e4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Right-side blue glow accent */
+.lv2-hero-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(37,99,235,0.35) 0%, transparent 65%),
+              radial-gradient(ellipse at 20% 100%, rgba(5,150,105,0.2) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* Subtle dot-grid texture */
+.lv2-hero-banner-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+
+/* Bottom accent stripe */
+.lv2-hero-banner-stripe {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, #2563eb 0%, #06b6d4 50%, #059669 100%);
+}
+
+/* Poetry variant — uses green as primary accent */
+.lv2-hero-banner-poetry {
+  background: #0f2d1f;
+}
+
+.lv2-hero-banner-poetry .lv2-hero-banner-overlay {
+  background: radial-gradient(ellipse at 75% 50%, rgba(5,150,105,0.45) 0%, transparent 65%),
+              radial-gradient(ellipse at 15% 90%, rgba(37,99,235,0.2) 0%, transparent 50%);
+}
+
+.lv2-hero-banner-poetry .lv2-hero-banner-stripe {
+  background: linear-gradient(to right, #059669 0%, #0d9488 50%, #2563eb 100%);
+}
+
+.lv2-hero-banner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.lv2-hero-banner-icon {
+  font-size: 48px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35));
+}
+
+.lv2-hero-banner-grade {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 20px;
+  padding: 4px 14px;
+}
+
+.lv2-hero-banner-chapter {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lv2-hero-body { padding: 24px 28px 28px; }
+
+.lv2-hero-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.lv2-pill {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+}
+
+.lv2-pill-grade  { background: #dbeafe; color: #1d4ed8; }
+.lv2-pill-sub    { background: #ede9fe; color: #6d28d9; }
+.lv2-pill-lvl    { background: #d1fae5; color: #065f46; }
+.lv2-pill-dur    { background: #fef3c7; color: #92400e; }
+.lv2-pill-chap   { background: #f3f4f6; color: #374151; }
+
+.lv2-hero-title {
+  font-family: var(--lv-font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--lv-navy);
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+
+.lv2-hero-desc {
+  font-size: 15px;
+  color: var(--lv-muted);
+  line-height: 1.7;
+  margin: 0 0 16px;
+}
+
+.lv2-hero-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lv2-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.lv2-badge-green  { background: #d1fae5; color: #065f46; }
+.lv2-badge-blue   { background: #dbeafe; color: #1d4ed8; }
+.lv2-badge-grey   { background: #f3f4f6; color: #4b5563; }
+.lv2-badge-teal   { background: #ccfbf1; color: #0f766e; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   SECTION CARDS  (math2b gradient-band style)
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-section {
+  background: var(--lv-surface);
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  overflow: hidden;
+  scroll-margin-top: calc(var(--lv-topbar-h) + 20px);
+  border: none;
+}
+
+/* ── Gradient banner header (math2b style) ── */
+.lv2-sec-head {
+  padding: 0;
+  border: none;
+  background: none;
+  display: block;
+}
+
+/* Gradient band per section color */
+.lv2-sh-blue   { background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); }
+.lv2-sh-purple { background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); }
+.lv2-sh-teal   { background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%); }
+.lv2-sh-gold   { background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%); }
+.lv2-sh-green  { background: linear-gradient(135deg, #059669 0%, #10b981 100%); }
+.lv2-sh-orange { background: linear-gradient(135deg, #f97316 0%, #ef4444 100%); }
+
+/* Inner layout of the gradient header */
+.lv2-sh-inner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 26px 16px;
+}
+
+/* Large section number badge */
+.lv2-sh-num {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.22);
+  border: 2px solid rgba(255,255,255,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 900;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+  font-family: var(--lv-font-sans);
+}
+
+.lv2-sh-text { flex: 1; min-width: 0; }
+
+.lv2-sh-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  display: block;
+  margin-bottom: 3px;
+}
+
+.lv2-sh-title {
+  font-family: var(--lv-font-serif);
+  font-size: 21px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.lv2-sh-icon { font-size: 20px; }
+
+/* ── Section body ── */
+.lv2-sec-content {
+  padding: 24px 26px 26px;
+}
+
+.lv2-empty {
+  color: var(--lv-muted);
+  font-size: 14px;
+  font-style: italic;
+  padding: 8px 0;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SECTION 1 — LEARNING OBJECTIVES
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-objectives-list {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lv2-obj-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--lv-text);
+  padding: 12px 16px;
+  background: var(--lv-blue-lt);
+  border-radius: 8px;
+  border-left: 3px solid var(--lv-blue);
+}
+
+.lv2-obj-check {
+  width: 22px; height: 22px;
+  background: var(--lv-blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.lv2-obj-check svg {
+  width: 11px; height: 11px;
+  stroke: #fff;
+  stroke-width: 2.5;
+  fill: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SECTION 2 — VOCABULARY
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.lv2-vocab-card {
+  background: var(--lv-purple-lt);
+  border: 1px solid #ddd6fe;
+  border-radius: 10px;
+  padding: 16px;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.lv2-vocab-card:hover {
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.12);
+  border-color: #a78bfa;
+}
+
+.lv2-vocab-top {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.lv2-vocab-word {
+  font-family: var(--lv-font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--lv-purple);
+}
+
+.lv2-vocab-pos {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #8b5cf6;
+  background: #ede9fe;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-style: italic;
+}
+
+.lv2-vocab-def {
+  font-size: 13.5px;
+  color: #4b5563;
+  line-height: 1.55;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SECTION 3 — WARM-UP
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-warmup-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  background: var(--lv-teal-lt);
+  border: 1px solid #99f6e4;
+  border-radius: 12px;
+  padding: 20px 22px;
+}
+
+.lv2-warmup-icon-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.lv2-warmup-icon { font-size: 32px; }
+
+.lv2-warmup-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--lv-teal);
+  background: #ccfbf1;
+  border-radius: 8px;
+  padding: 2px 7px;
+  white-space: nowrap;
+}
+
+.lv2-warmup-text {
+  flex: 1;
+  font-size: 15px;
+  color: var(--lv-text);
+  line-height: 1.7;
+}
+
+.lv2-warmup-text p { margin: 0 0 8px; }
+.lv2-warmup-text p:last-child { margin: 0; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   SECTION 4 — MAIN EXPLANATION
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-explanation {
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: var(--lv-text);
+}
+
+.lv2-explanation p { margin: 0 0 12px; }
+.lv2-explanation p:last-child { margin: 0; }
+.lv2-explanation strong { color: var(--lv-navy); }
+
+/* ══════════════════════════════════════════════════════════════════════
+   SECTION 5 — WORKED EXAMPLES
+══════════════════════════════════════════════════════════════════════ */
+
+/* Intro banner (examples + poems) */
+.lv2-examples-intro {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(to right, #f0fdf4, #ecfdf5);
+  border: 1px solid #a7f3d0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  font-size: 15px;
+  color: #065f46;
+}
+
+.lv2-examples-intro-icon { font-size: 22px; flex-shrink: 0; }
+
+/* Poem grid — single column, full-width */
+.lv2-poems-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ── Poem hero image (full-width at top of each poem card) ── */
+.lv2-poem-hero-img-wrap {
+  width: 100%;
+  height: 340px;
+  overflow: hidden;
+  background: #0f2d1f;
+}
+.lv2-poem-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.lv2-poem-card:hover .lv2-poem-hero-img {
+  transform: scale(1.03);
+}
+
+/* ── Poem card — international textbook design ── */
+.lv2-poem-card {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(5,150,105,0.12), 0 1px 4px rgba(0,0,0,0.06);
+  transition: transform 0.18s, box-shadow 0.18s;
+  background: #fff;
+}
+
+.lv2-poem-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(5,150,105,0.2), 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.lv2-poem-card-head {
+  background: linear-gradient(135deg, #059669 0%, #0891b2 100%);
+  padding: 20px 24px 18px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle wave decoration in header */
+.lv2-poem-card-head::after {
+  content: '';
+  position: absolute;
+  bottom: -18px;
+  left: -10%;
+  right: -10%;
+  height: 36px;
+  background: #fff;
+  border-radius: 50% 50% 0 0;
+  z-index: 1;
+}
+
+.lv2-poem-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.lv2-poem-n {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 10px;
+  padding: 2px 10px;
+}
+
+.lv2-poem-genre {
+  font-size: 12px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 10px;
+  padding: 3px 11px;
+  font-weight: 700;
+}
+
+.lv2-poem-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+.lv2-poem-quote {
+  font-family: var(--lv-font-serif);
+  font-size: 32px;
+  line-height: 1;
+  opacity: 0.45;
+  margin-top: -6px;
+  flex-shrink: 0;
+}
+
+.lv2-poem-title {
+  font-family: var(--lv-font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+/* Poem body (lines) */
+.lv2-poem-body {
+  padding: 28px 24px 20px;
+  background: #fafffe;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.lv2-poem-line {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 6px 8px 6px 0;
+  border-radius: 4px;
+  transition: background 0.1s;
+}
+
+.lv2-poem-line:hover { background: rgba(5,150,105,0.05); }
+
+.lv2-poem-lineno {
+  font-size: 10px;
+  color: #9ca3af;
+  font-weight: 700;
+  width: 16px;
+  text-align: right;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.lv2-poem-linetext {
+  font-family: var(--lv-font-serif);
+  font-size: 17px;
+  font-style: italic;
+  color: var(--lv-navy);
+  line-height: 2.1;
+  border-left: 3px solid #34d399;
+  padding-left: 14px;
+  flex: 1;
+}
+
+/* Poem analysis panel */
+.lv2-poem-analysis {
+  background: #f8fafc;
+  border-top: 2px solid #e2e8f0;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lv2-analysis-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.lv2-analysis-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--lv-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  min-width: 120px;
+}
+
+.lv2-scheme-chips { display: flex; gap: 5px; flex-wrap: wrap; }
+
+.lv2-scheme-chip {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 900;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.lv2-scheme-a { background: #059669; }
+.lv2-scheme-b { background: #2563eb; }
+.lv2-scheme-c { background: #7c3aed; }
+.lv2-scheme-d { background: #d97706; }
+.lv2-scheme-e { background: #dc2626; }
+.lv2-scheme-f { background: #0891b2; }
+
+.lv2-rhyme-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.lv2-rhyme-chip {
+  background: #d1fae5;
+  color: #065f46;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid #6ee7b7;
+}
+
+.lv2-poem-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #78350f;
+  font-style: italic;
+  background: #fffbeb;
+  border-radius: 8px;
+  padding: 10px 14px;
+  border-left: 3px solid #f59e0b;
+}
+
+.lv2-tip-icon { font-size: 16px; flex-shrink: 0; }
+
+/* Extra examples below poems */
+.lv2-extra-examples { margin-top: 32px; }
+
+.lv2-extra-examples-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--lv-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--lv-border);
+}
+
+/* General example cards */
+.lv2-examples-list { display: flex; flex-direction: column; gap: 16px; }
+
+.lv2-example-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: var(--lv-green-lt);
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  padding: 18px;
+  transition: box-shadow 0.15s;
+}
+
+.lv2-example-card:hover { box-shadow: 0 4px 12px rgba(5, 150, 105, 0.1); }
+
+.lv2-example-badge {
+  background: var(--lv-green);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 5px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
+}
+
+.lv2-example-content { flex: 1; }
+
+.lv2-example-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--lv-green);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.lv2-example-text { font-size: 15px; color: var(--lv-text); line-height: 1.7; }
+.lv2-example-text p { margin: 0 0 8px; }
+.lv2-example-text p:last-child { margin: 0; }
+
+/* Q&A block */
+.lv2-qa-block { display: flex; flex-direction: column; gap: 8px; }
+
+.lv2-qa-q, .lv2-qa-a {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.lv2-qa-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.lv2-qa-qtag { background: #dbeafe; color: var(--lv-blue); }
+.lv2-qa-atag { background: #d1fae5; color: var(--lv-green); }
+
+.lv2-qa-divider {
+  text-align: center;
+  font-size: 18px;
+  color: #9ca3af;
+  margin: -2px 0;
+}
+
+/* Try it button */
+.lv2-tryit-btn {
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--lv-green);
+  background: none;
+  border: 1px solid #a7f3d0;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.12s;
+}
+
+.lv2-tryit-btn:hover { background: #d1fae5; }
+
+.lv2-tryit-box {
+  margin-top: 10px;
+  background: #fff;
+  border: 1px dashed #6ee7b7;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13.5px;
+  color: #374151;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SECTION 6 — PRACTICE
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-practice-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.lv2-practice-tab {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background: #f3f4f6;
+  color: #374151;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.lv2-ptab-easy.active    { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+.lv2-ptab-medium.active  { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
+.lv2-ptab-challenge.active{ background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+.lv2-practice-tab:hover:not(.active) { background: #e5e7eb; }
+
+.lv2-exercise-list { display: flex; flex-direction: column; gap: 12px; }
+
+.lv2-exercise-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--lv-orange-lt);
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.lv2-exercise-num {
+  width: 36px; height: 36px;
+  background: var(--lv-orange);
+  color: #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.lv2-exercise-body { flex: 1; }
+
+.lv2-exercise-q {
+  font-size: 15px;
+  color: var(--lv-text);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.lv2-exercise-hint {
+  font-size: 13px;
+  color: #92400e;
+}
+
+.lv2-exercise-hint summary {
+  cursor: pointer;
+  color: var(--lv-orange);
+  font-weight: 600;
+  list-style: none;
+  user-select: none;
+}
+
+.lv2-exercise-hint summary::before { content: '▶ '; font-size: 10px; }
+.lv2-exercise-hint[open] summary::before { content: '▼ '; }
+
+.lv2-exercise-hint span {
+  display: block;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #fffbeb;
+  border-left: 3px solid #fcd34d;
+  border-radius: 4px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SECTION 7 — QUIZ
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-quiz-list { display: flex; flex-direction: column; gap: 0; }
+
+.lv2-quiz-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.lv2-quiz-item:last-child { border-bottom: none; }
+
+.lv2-quiz-num {
+  width: 34px; height: 34px;
+  background: var(--lv-blue);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.lv2-quiz-body { flex: 1; }
+
+.lv2-quiz-q {
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--lv-text);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.lv2-quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+
+.lv2-quiz-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--lv-surface);
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.lv2-quiz-opt:hover:not(.correct):not(.wrong):not(.dimmed) {
+  border-color: var(--lv-blue);
+  background: var(--lv-blue-lt);
+}
+
+.lv2-quiz-opt.selected  { border-color: var(--lv-blue); background: var(--lv-blue-lt); }
+.lv2-quiz-opt.correct   { border-color: var(--lv-green); background: #d1fae5; color: #065f46; }
+.lv2-quiz-opt.wrong     { border-color: #ef4444; background: #fee2e2; color: #991b1b; }
+.lv2-quiz-opt.dimmed    { opacity: 0.45; cursor: not-allowed; }
+
+.lv2-opt-letter {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.lv2-quiz-opt.correct .lv2-opt-letter { background: var(--lv-green); color: #fff; }
+.lv2-quiz-opt.wrong   .lv2-opt-letter { background: #ef4444; color: #fff; }
+
+.lv2-opt-text { flex: 1; font-size: 14.5px; }
+
+.lv2-opt-mark {
+  font-size: 18px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.lv2-opt-check { color: var(--lv-green); }
+.lv2-opt-cross { color: #ef4444; }
+
+.lv2-quiz-feedback {
+  margin-top: 12px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.lv2-quiz-feedback.correct { background: #d1fae5; color: #065f46; }
+.lv2-quiz-feedback.wrong   { background: #fee2e2; color: #991b1b; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   SECTION 8 — ANSWER KEY
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-answers-teacher-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  padding: 5px 12px;
+  margin-bottom: 14px;
+}
+
+.lv2-reveal-btn {
+  display: block;
+  padding: 9px 20px;
+  background: var(--lv-green);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  margin-bottom: 16px;
+  transition: background 0.15s;
+}
+
+.lv2-reveal-btn:hover { background: #047857; }
+
+.lv2-answer-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.lv2-answer-table th, .lv2-answer-table td {
+  border: 1px solid #e5e7eb;
+  padding: 10px 16px;
+  text-align: left;
+}
+
+.lv2-answer-table th {
+  background: #f9fafb;
+  font-weight: 700;
+  color: var(--lv-navy);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.lv2-answer-table tr:nth-child(even) td { background: #f9fafb; }
+
+.lv2-answer-badge {
+  background: #d1fae5;
+  color: #065f46;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.lv2-answer-text {
+  font-size: 15px;
+  color: var(--lv-text);
+  line-height: 1.7;
+  background: var(--lv-green-lt);
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+
+.lv2-answer-text p { margin: 0 0 8px; }
+.lv2-answer-text p:last-child { margin: 0; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   SECTION 9 — TEACHER NOTES
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-teacher-box {
+  background: var(--lv-purple-lt);
+  border-left: 4px solid var(--lv-purple);
+  border-radius: 0 10px 10px 0;
+  padding: 18px 20px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--lv-text);
+}
+
+.lv2-teacher-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--lv-purple);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.lv2-teacher-box p { margin: 0 0 8px; }
+.lv2-teacher-box p:last-child { margin: 0; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   SECTION 10 — RESOURCES
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.lv2-resource-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--lv-border);
+  background: #f9fafb;
+  transition: box-shadow 0.15s;
+}
+
+.lv2-resource-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.lv2-res-blue   { border-left: 3px solid var(--lv-blue); }
+.lv2-res-red    { border-left: 3px solid #ef4444; }
+.lv2-res-purple { border-left: 3px solid var(--lv-purple); }
+.lv2-res-green  { border-left: 3px solid var(--lv-green); }
+.lv2-res-teal   { border-left: 3px solid var(--lv-teal); }
+.lv2-res-navy   { border-left: 3px solid var(--lv-navy); }
+
+.lv2-res-icon { font-size: 26px; flex-shrink: 0; }
+
+.lv2-res-name {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--lv-text);
+  margin-bottom: 4px;
+}
+
+.lv2-res-desc {
+  font-size: 13px;
+  color: var(--lv-muted);
+  line-height: 1.45;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SECTION 11 — IMAGE BLOCKS
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.lv2-image-card {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--lv-border);
+  box-shadow: var(--lv-shadow);
+}
+
+.lv2-image-placeholder {
+  height: 160px;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-bottom: 2px dashed #93c5fd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.lv2-image-placeholder-icon { font-size: 36px; }
+
+.lv2-image-placeholder-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #60a5fa;
+}
+
+.lv2-image-prompt-text {
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #374151;
+  font-style: italic;
+  line-height: 1.5;
+  background: var(--lv-surface);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   RIGHT OVERVIEW PANEL
+══════════════════════════════════════════════════════════════════════ */
+
+.lv2-overview {
+  background: var(--lv-surface);
+  border-radius: 14px;
+  box-shadow: var(--lv-shadow);
+  padding: 20px;
+  position: sticky;
+  top: calc(var(--lv-topbar-h) + 16px);
+  max-height: calc(100vh - var(--lv-topbar-h) - 40px);
+  overflow-y: auto;
+}
+
+.lv2-ov-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--lv-muted);
+  margin-bottom: 10px;
+}
+
+.lv2-ov-title {
+  font-family: var(--lv-font-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--lv-navy);
+  line-height: 1.35;
+  margin-bottom: 14px;
+}
+
+.lv2-ov-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.lv2-ov-meta-item {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.lv2-ov-meta-k {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--lv-muted);
+  margin-bottom: 2px;
+}
+
+.lv2-ov-meta-v {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--lv-text);
+}
+
+.lv2-ov-divider {
+  height: 1px;
+  background: var(--lv-border);
+  margin: 14px 0;
+}
+
+.lv2-ov-active-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--lv-muted);
+  margin-bottom: 6px;
+}
+
+.lv2-ov-active-section {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--lv-blue);
+  background: var(--lv-blue-lt);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.lv2-ov-progress {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.lv2-ov-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--lv-blue), var(--lv-teal));
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
+
+.lv2-ov-progress-label {
+  font-size: 11.5px;
+  color: var(--lv-muted);
+  margin-bottom: 0;
+}
+
+.lv2-ov-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.lv2-ov-stat {
+  text-align: center;
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 10px 8px;
+}
+
+.lv2-ov-stat-n {
+  display: block;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--lv-navy);
+  line-height: 1.2;
+}
+
+.lv2-ov-stat-k {
+  display: block;
+  font-size: 10.5px;
+  color: var(--lv-muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Overview buttons */
+.lv2-ov-btn {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  margin-bottom: 8px;
+  text-align: center;
+  transition: all 0.15s;
+  border: none;
+}
+
+.lv2-ov-btn-primary {
+  background: var(--lv-blue);
+  color: #fff;
+}
+.lv2-ov-btn-primary:hover { background: #1d4ed8; }
+
+.lv2-ov-btn-secondary {
+  background: #f3f4f6;
+  color: var(--lv-text);
+  border: 1px solid var(--lv-border);
+}
+.lv2-ov-btn-secondary:hover { background: #e5e7eb; }
+
+.lv2-ov-btn-ghost {
+  background: transparent;
+  color: var(--lv-muted);
+  border: 1px solid #e2e8f0;
+}
+.lv2-ov-btn-ghost:hover { background: #f9fafb; color: var(--lv-text); }
+
+/* ══════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1200px) {
+  .lv2-layout {
+    grid-template-columns: 260px 1fr 280px;
+    gap: 16px;
+    padding: 16px 16px 48px;
+  }
+}
+
+@media (max-width: 900px) {
+  .lv2-layout {
+    grid-template-columns: 1fr;
+  }
+  .lv2-sidebar, .lv2-overview {
+    position: static;
+    max-height: none;
+  }
+  .lv2-overview { order: -1; }
+  .lv2-nav-pills { display: none; }
+}
+
+@media (max-width: 600px) {
+  .lv2-navbar { padding: 0 14px; gap: 10px; }
+  .lv2-nav-crumb { display: none; }
+  .lv2-hero-title { font-size: 22px; }
+  .lv2-vocab-grid { grid-template-columns: 1fr 1fr; }
+  .lv2-poem-linetext { font-size: 16px; }
+  .lv2-nav-btn:first-of-type { display: none; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   PRINT STYLES
+══════════════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════════════
+   POEM SCROLL TARGET HIGHLIGHT
+══════════════════════════════════════════════════════════════════════ */
+
+@keyframes lv-poem-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(5,150,105,0.55); }
+  40%  { box-shadow: 0 0 0 14px rgba(5,150,105,0.2); }
+  100% { box-shadow: 0 0 0 0 rgba(5,150,105,0); }
+}
+
+.lv2-poem-highlight {
+  animation: lv-poem-pulse 2s ease-out;
+  border: 2px solid var(--lv-green) !important;
+  border-radius: 14px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   PRINT STYLES
+══════════════════════════════════════════════════════════════════════ */
+
+@media print {
+  .lv2-navbar, .lv2-sidebar, .lv2-overview { display: none !important; }
+  .lv2-layout { display: block !important; }
+  .lv2-main { box-shadow: none; }
+  .lv2-section { box-shadow: none; page-break-inside: avoid; break-inside: avoid; }
+  .lv2-hero-banner { display: none; }
+  .lv2-reveal-btn { display: none; }
+  .lv2-tryit-btn { display: none; }
+}

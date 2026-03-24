@@ -1,0 +1,587 @@
+/* ═══════════════════════════════════════════════════════════
+   Presentation Builder — full-page layout
+═══════════════════════════════════════════════════════════ */
+
+/* ── Root ── */
+.pres-root {
+  min-height: 100vh;
+  background: #FFF0F5;
+  display: flex;
+  flex-direction: column;
+  font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+}
+
+/* ── Navbar ── */
+.pres-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  height: 56px;
+  background: #EFF6FF;
+  border-bottom: 1px solid #BFDBFE;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px;
+  box-shadow: 0 1px 8px rgba(37, 99, 235, 0.08);
+  flex-shrink: 0;
+}
+
+.pres-nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.pres-nav-logo-img {
+  height: 46px;
+  object-fit: contain;
+}
+
+.pres-nav-logo-text {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  font-family: 'Space Grotesk', 'DM Sans', system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.pres-logo-dark { font-weight: 800; color: #111827; }
+.pres-logo-blue { font-weight: 800; color: #2563EB; }
+
+.pres-nav-crumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.pres-crumb-btn {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: #2563EB;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.pres-crumb-btn:hover { text-decoration: underline; }
+.pres-crumb-sep { color: #94A3B8; font-size: 13px; }
+.pres-crumb-cur { font-size: 13px; color: #374151; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.pres-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pres-nav-btn {
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.pres-btn-ghost {
+  background: transparent;
+  color: #374151;
+  border: 1px solid #CBD5E1;
+}
+.pres-btn-ghost:hover { background: #F1F5F9; color: #111827; }
+
+.pres-btn-primary {
+  background: #1a1a1a;
+  color: #fff;
+}
+.pres-btn-primary:hover { background: #2563EB; }
+.pres-btn-primary:disabled { background: #94A3B8; cursor: not-allowed; }
+
+/* ── Two-column layout ── */
+.pres-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100vh - 56px);
+}
+
+/* ═══════════════════════
+   LEFT PANEL — Input
+═══════════════════════ */
+.pres-left {
+  width: 340px;
+  flex-shrink: 0;
+  background: #FFFFFF;
+  border-right: 1px solid #E2E8F0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.pres-left-inner {
+  padding: 24px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pres-panel-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.pres-panel-icon { font-size: 18px; }
+
+/* ── Fields ── */
+.pres-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pres-field-half { flex: 1; }
+
+.pres-row {
+  display: flex;
+  gap: 12px;
+}
+
+.pres-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  letter-spacing: 0.01em;
+}
+
+.pres-required { color: #EF4444; margin-left: 2px; }
+.pres-hint { color: #94A3B8; font-weight: 400; }
+
+.pres-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-family: inherit;
+  color: #1E293B;
+  background: #FAFAFA;
+  resize: vertical;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+  line-height: 1.5;
+}
+.pres-textarea:focus { outline: none; border-color: #2563EB; background: #fff; }
+
+.pres-select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-family: inherit;
+  color: #1E293B;
+  background: #FAFAFA;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+.pres-select:focus { outline: none; border-color: #2563EB; }
+
+/* ── File upload ── */
+.pres-upload-box {
+  border: 2px dashed #CBD5E1;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  background: #F8FAFC;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pres-upload-box:hover { border-color: #2563EB; background: #EFF6FF; }
+
+.pres-upload-hint {
+  font-size: 12.5px;
+  color: #64748B;
+  line-height: 1.5;
+}
+
+.pres-upload-file {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #1E293B;
+  font-weight: 500;
+}
+
+.pres-upload-clear {
+  background: #FEE2E2;
+  border: none;
+  color: #DC2626;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+/* ── Error ── */
+.pres-error {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #DC2626;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ── Generate button ── */
+.pres-generate-btn {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+  transition: opacity 0.15s, transform 0.12s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.pres-generate-btn:hover:not(:disabled) { opacity: 0.92; transform: translateY(-1px); }
+.pres-generate-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* ── Spinner inside button ── */
+.pres-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: presSpinBtn 0.7s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes presSpinBtn { to { transform: rotate(360deg); } }
+
+/* ── Stats row ── */
+.pres-stats {
+  display: flex;
+  gap: 10px;
+}
+.pres-stat {
+  flex: 1;
+  background: #EFF6FF;
+  border-radius: 10px;
+  padding: 10px 6px;
+  text-align: center;
+  font-size: 11px;
+  color: #64748B;
+  font-weight: 500;
+}
+.pres-stat span {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  color: #2563EB;
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+/* ═══════════════════════
+   RIGHT PANEL — Viewer
+═══════════════════════ */
+.pres-right {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  background: #FFF0F5;
+}
+
+/* ── Empty state ── */
+.pres-empty {
+  max-width: 520px;
+  text-align: center;
+  padding: 40px 24px;
+}
+.pres-empty-icon { font-size: 64px; margin-bottom: 16px; }
+.pres-empty-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+.pres-empty-sub {
+  font-size: 15px;
+  color: #64748B;
+  line-height: 1.7;
+  margin: 0 0 24px;
+}
+.pres-empty-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.pres-empty-feat {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* ── Generating state ── */
+.pres-generating {
+  text-align: center;
+  padding: 40px;
+}
+.pres-gen-spinner {
+  width: 56px;
+  height: 56px;
+  border: 4px solid #BFDBFE;
+  border-top-color: #2563EB;
+  border-radius: 50%;
+  animation: presSpinBtn 0.9s linear infinite;
+  margin: 0 auto 20px;
+}
+.pres-gen-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 0 0 8px;
+}
+.pres-gen-sub {
+  font-size: 14px;
+  color: #64748B;
+  margin: 0;
+}
+
+/* ── Viewer wrapper ── */
+.pres-viewer {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+/* ── Slide canvas ── */
+.pres-slide-canvas {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(0, 0, 0, 0.10);
+  background: #1e3a8a;
+  flex-shrink: 0;
+}
+
+/* ── Navigation controls ── */
+.pres-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+}
+
+.pres-ctrl-btn {
+  padding: 8px 20px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1.5px solid #E2E8F0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pres-ctrl-btn:hover:not(:disabled) { background: #EFF6FF; border-color: #2563EB; color: #2563EB; }
+.pres-ctrl-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.pres-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 400px;
+}
+
+.pres-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #CBD5E1;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, transform 0.2s;
+}
+.pres-dot:hover { background: #94A3B8; }
+.pres-dot-active {
+  background: #2563EB;
+  transform: scale(1.4);
+}
+
+/* ── Speaker notes ── */
+.pres-notes {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 13.5px;
+  color: #374151;
+  line-height: 1.6;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.pres-notes-label {
+  font-weight: 700;
+  color: #111827;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Slide strip thumbnails ── */
+.pres-strip {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  overflow-x: auto;
+  padding: 4px 0 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 transparent;
+}
+.pres-strip::-webkit-scrollbar { height: 4px; }
+.pres-strip::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+
+.pres-thumb {
+  flex-shrink: 0;
+  width: 110px;
+  height: 70px;
+  border-radius: 8px;
+  border: 2.5px solid transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 6px 8px;
+  overflow: hidden;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.pres-thumb:hover { transform: translateY(-2px); }
+.pres-thumb-active { border-color: #ffffff; box-shadow: 0 0 0 2px #2563EB; }
+
+.pres-thumb-emoji { font-size: 18px; line-height: 1; }
+.pres-thumb-title {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  line-height: 1.3;
+}
+.pres-thumb-type {
+  font-size: 8px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Download row ── */
+.pres-download-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.pres-dl-btn {
+  padding: 12px 32px;
+  background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+  transition: opacity 0.15s, transform 0.12s;
+}
+.pres-dl-btn:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+.pres-dl-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .pres-layout { flex-direction: column; height: auto; overflow: visible; }
+  .pres-left { width: 100%; border-right: none; border-bottom: 1px solid #E2E8F0; }
+  .pres-right { padding: 20px 12px 40px; }
+  .pres-navbar { padding: 0 12px; gap: 8px; }
+  .pres-nav-crumb { display: none; }
+  .pres-thumb { width: 90px; height: 58px; }
+}
+
+@media (max-width: 480px) {
+  .pres-slide-canvas { border-radius: 10px; }
+  .pres-ctrl-btn { padding: 7px 12px; font-size: 13px; }
+}
+
+/* ── Print ── */
+@media print {
+  .pres-navbar, .pres-left, .pres-controls, .pres-notes, .pres-strip, .pres-download-row { display: none !important; }
+  .pres-right { padding: 0; }
+  .pres-slide-canvas { box-shadow: none; border-radius: 0; }
+}
